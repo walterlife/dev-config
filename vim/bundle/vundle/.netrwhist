@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/opt/walter/workspace/svn/aturtle/aturtle_server/server/build_mine/online/log/20150702'
+let g:netrw_dirhist_2='/opt/walter/workspace/svn/aturtle/aturtle_server/server/build_mine/online/log'
+let g:netrw_dirhist_3='/opt/walter/workspace/svn/aturtle/aturtle_server/server/gamecenter/trunk/tools/web/gamecenter'
+let g:netrw_dirhist_4='/opt/walter/workspace/svn/aturtle/aturtle_server/server/build/online/etc/conf'
