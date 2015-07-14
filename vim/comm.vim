@@ -246,6 +246,7 @@ autocmd BufRead *.as set filetype=actionscript
 autocmd BufRead *.proto set filetype=proto
 autocmd BufRead \d\+-\(\w\+\)-\d\{6\}-\d\{4\}  set filetype=log
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
+au BufNewFile,BufRead *.gradle setf groovy
 
 " 新建.c,.h,.sh,.java文件，自动插入文件头
 autocmd BufNewFile *.html,*.cpp,*.cc,*.[ch],*.hpp,*.sh,*.rb,*.java,*.py exec ":call SetTitle()"
