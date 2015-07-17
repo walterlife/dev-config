@@ -12,6 +12,8 @@ Bundle 'vim-scripts/AutoComplPop'
 Bundle 'vim-scripts/comments.vim'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'Shougo/neocomplcache'
+Bundle 'scrooloose/nerdtree'
+Bundle 'fholgado/minibufexpl.vim'
 
 "---------------------------------------------------------------------------
 " 通用设置
@@ -118,7 +120,7 @@ set t_Co=256
 set pastetoggle=<F9>
 
 " 在vim中启用backspace
-set backspace=indent,eol,start
+"set backspace=indent,eol,start
 
 " vim 命令行中tab键补全文件
 set wildmenu
@@ -182,6 +184,9 @@ nnoremap <silent> <F6> :TagbarToggle<CR>
 " 罗列出多个函数列表
 nnoremap <C-]> <Esc>g]
 
+" nerdtree
+map <F7> :NERDTreeToggle<CR>
+
 "---------------------------------------------------------------------------
 "插件设置
 "---------------------------------------------------------------------------
@@ -238,10 +243,13 @@ autocmd FileType python setlocal foldmethod=indent
 autocmd FileType vim set nofen
 autocmd FileType vim map <buffer> <leader><space> :w!<cr>:source %<cr>
 
+" java
+autocmd FileType java set omnifunc=javacomplete#Complete
+autocmd FileType java set completefunc=javacomplete#CompleteParamsInfo
+
 " others
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType java set omnifunc=javacomplete#Complete
 autocmd BufRead *.as set filetype=actionscript
 autocmd BufRead *.proto set filetype=proto
 autocmd BufRead \d\+-\(\w\+\)-\d\{6\}-\d\{4\}  set filetype=log
@@ -416,10 +424,6 @@ func SetTitle()
         call append(line(".")+12, "")
         call append(line(".")+13, "")
         call append(line(".")+14, "#endif")
-    endif
-    if &filetype == 'java'
-        call append(line(".")+10,"public class ".expand("%:r"))
-        call append(line(".")+11,"")
     endif
     "新建文件后，自动定位到文件末尾
 endfunc
