@@ -151,17 +151,18 @@ export DISTCC_VERBOSE=0
 export DISTCC_LOG='/tmp/disstcc_walter.log'
 
 # java src path config
-JAVA_HOME=/usr/lib/jvm/java-6-openjdk-amd64
+JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
 PATH=$PATH:$JAVA_HOME/bin
 CLASSPATH=.:$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar:~/.vim/autoload
 export PATH JAVA_HOME CLASSPATH
 
 # maven config
 M2_HOME=/usr/local/apache-maven-3.2.2
+#M2_HOME=/opt/walter/.test/code/exercise/java_test/apache-maven-3.0.5
 GRADLE_HOME=/opt/walter/tmp/gradle-2.5
 export MAVEN_OPTS="-Xms256m -Xmx512m"
-export PATH=$M2_HOME/bin:$GRADLE_HOME/bin:$PATH
+export PATH=$M2_HOME/bin:$PATH
+export PATH=$GRADLE_HOME/bin:$PATH
 
-# tmux 支持 vim power-line
 export TERM="screen-256color"
 alias tmux="tmux -2"
