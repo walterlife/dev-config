@@ -222,6 +222,11 @@ let g:vim_markdown_folding_disabled = 1
 " O 递归打开/关闭所选目录
 " o 打开/关闭当前文件/目录
 " m 显示目录,对此可以新建文件,重命名文件等操作
+" s 以 vsplit 新打开文件
+" p 跳到当前 父节点
+" P 调到根节点
+" K J 用于 同一level =节点间跳转
+
 " 启动vim时就显示书签
 autocmd VimEnter * NERDTree
 
