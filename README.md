@@ -4,7 +4,6 @@
 平时工作时，在linux平台上开发所涉及的相关配置和使用
 
 ## vim
-
 + 该目录下包含了平时自己使用的vim插件配件，使用bundle 管理， 使用
 
 ```bash
@@ -12,7 +11,6 @@ cp -r vim ~/.vimrc && cd ~/ && ln -fs .vim/comm.vim .vimrc
 ```
 
 ## tmux
-
 + tmux.conf 是 tmux的配置文件，使用
 
 ```bash

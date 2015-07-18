@@ -215,7 +215,15 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 
 " markdown
-let g:vim_markdown_folding_disabled=1
+let g:vim_markdown_folding_disabled = 1
+
+" nerdtree
+" 常用内置快捷说明
+" O 递归打开/关闭所选目录
+" o 打开/关闭当前文件/目录
+" m 显示目录,对此可以新建文件,重命名文件等操作
+" 启动vim时就显示书签
+autocmd VimEnter * NERDTree
 
 "----------------------------------------------------------------------------
 " 文件类型设置 
