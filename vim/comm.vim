@@ -13,7 +13,8 @@ Bundle 'vim-scripts/comments.vim'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'Shougo/neocomplcache'
 Bundle 'scrooloose/nerdtree'
-Bundle 'fholgado/minibufexpl.vim'
+"Bundle 'cespare/vjde'
+Bundle 'vim-scripts/Conque-Shell'
 
 "---------------------------------------------------------------------------
 " 通用设置
@@ -40,7 +41,7 @@ set noswapfile
 set helplang=cn
 set nocompatible
 set winaltkeys=no
-set tags=~/.vim/comm_tags,~/.vim/cpp_tags,tags,tags; 
+set tags=~/.vim/comm_tags,~/.vim/tags,tags,tags; 
 set foldmethod=syntax
 set foldlevel=99
 
@@ -187,6 +188,20 @@ nnoremap <C-]> <Esc>g]
 " nerdtree
 map <F7> :NERDTreeToggle<CR>
 
+nnoremap <leader>gs :call Vjde_get_set()<CR>
+
+" 重新加载 .vimrc
+nnoremap \s <ESC>:source ~/.vim/comm.vim<cr>
+" 编辑.vimrc
+nnoremap \e <ESC>:e! ~/.vim/comm.vim<cr>
+
+" eclim
+nnoremap \t <ESC>:JavaImportOrganize <CR>
+nnoremap \g <ESC>:JavaGetSet<CR>
+nnoremap \r <ESC>:JavaImpl 
+nnoremap \y <ESC>:NewSrcEntry 
+nnoremap \l <ESC>:Java <CR>
+
 "---------------------------------------------------------------------------
 "插件设置
 "---------------------------------------------------------------------------
@@ -230,6 +245,14 @@ let g:vim_markdown_folding_disabled = 1
 " 启动vim时就显示书签
 autocmd VimEnter * NERDTree
 
+"let g:vjde_src_path = "/home/java/.vim/java_src/"
+
+let g:EclimCompletionMethod = 'omnifunc'
+if !exists('g:neocomplcache_force_omni_patterns')
+    let g:neocomplcache_force_omni_patterns = {}
+endif
+"let g:neocomplcache_force_omni_patterns.java = '\k\.\k*'
+
 "----------------------------------------------------------------------------
 " 文件类型设置 
 "----------------------------------------------------------------------------
@@ -257,11 +280,14 @@ autocmd FileType vim set nofen
 autocmd FileType vim map <buffer> <leader><space> :w!<cr>:source %<cr>
 
 " java
-autocmd FileType java set omnifunc=javacomplete#Complete
-autocmd FileType java set completefunc=javacomplete#CompleteParamsInfo
+"autocmd FileType java set omnifunc=javacomplete#Complete
+"autocmd FileType java set completefunc=javacomplete#CompleteParamsInfo
+
+" eclim
+autocmd FileType java inoremap <buffer> . .<C-X><C-O><Down>
 
 " others
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+"autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd BufRead *.as set filetype=actionscript
 autocmd BufRead *.proto set filetype=proto
@@ -270,7 +296,7 @@ au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
 au BufNewFile,BufRead *.gradle setf groovy
 
 " 新建.c,.h,.sh,.java文件，自动插入文件头
-autocmd BufNewFile *.html,*.cpp,*.cc,*.[ch],*.hpp,*.sh,*.rb,*.java,*.py exec ":call SetTitle()"
+autocmd BufNewFile *.html,*.cpp,*.cc,*.[ch],*.hpp,*.sh,*.rb,*.java,*.py call s:SetFileTitle()"
 
 "----------------------------------------------------------------------------
 " 函数 
@@ -356,7 +382,7 @@ function! SET_UAW()
 endfunction
 
 " 定义函数SetTitle，自动插入文件头
-func SetTitle()
+function! SetFileTitle()
     "如果文件类型为.sh文件
     if &filetype == 'sh'
         call setline(1,"#!/usr/bin/env bash")
@@ -398,19 +424,6 @@ func SetTitle()
         call append(line(".")+5, "")
         call append(line(".")+6, "</body>")
         call append(line(".")+7, "</html>")
-    else
-        call setline(1, "/*************************************************************************")
-        call append(line("."),   " *    File Name: ".expand("%"))
-        call append(line(".")+1, " * ")
-        call append(line(".")+2, " *       Author: Shootao Shanghai,Inc.")
-        call append(line(".")+3, " *         Mail: walter@shootao.com")
-        call append(line(".")+4, " * Created Time: ".strftime("%c"))
-        call append(line(".")+5, " * ")
-        call append(line(".")+6, " *  Description: ...")
-        call append(line(".")+7, " * ")
-        call append(line(".")+8, " ************************************************************************")
-        call append(line(".")+9, "*/")
-        call append(line(".")+10, "")
     endif
     if expand("%:e") == 'cpp'
         call append(line(".")+10, "#include <iostream>")
@@ -445,4 +458,4 @@ endfunc
 " 项目中自定义调用 SHELL CMD 
 "----------------------------------------------------------------------------
 " 编译项目
-nnoremap ,c :!COMPILE<C-R>
+nnoremap ,c :!BUILD<C-R>
