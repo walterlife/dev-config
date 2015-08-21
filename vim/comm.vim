@@ -13,8 +13,6 @@ Bundle 'vim-scripts/comments.vim'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'Shougo/neocomplcache'
 Bundle 'scrooloose/nerdtree'
-"Bundle 'cespare/vjde'
-Bundle 'vim-scripts/Conque-Shell'
 
 "---------------------------------------------------------------------------
 " 通用设置
