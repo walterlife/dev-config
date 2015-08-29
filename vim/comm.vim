@@ -13,6 +13,8 @@ Bundle 'vim-scripts/comments.vim'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'Shougo/neocomplcache'
 Bundle 'scrooloose/nerdtree'
+"Bundle 'cespare/vjde'
+Bundle 'vim-scripts/Conque-Shell'
 
 "---------------------------------------------------------------------------
 " 通用设置
@@ -143,6 +145,8 @@ set wildignore=*.o,*~,*.pyc
 "----------------------------------------------------------------------------
 " 快捷键绑定
 "----------------------------------------------------------------------------
+
+" self define
 " vim 帮助
 map  <F1> :help <C-R>=expand('<cword>')<CR><CR>
 
@@ -186,8 +190,6 @@ nnoremap <C-]> <Esc>g]
 " nerdtree
 map <F7> :NERDTreeToggle<CR>
 
-nnoremap <leader>gs :call Vjde_get_set()<CR>
-
 " 重新加载 .vimrc
 nnoremap \s <ESC>:source ~/.vim/comm.vim<cr>
 " 编辑.vimrc
@@ -196,9 +198,17 @@ nnoremap \e <ESC>:e! ~/.vim/comm.vim<cr>
 " eclim
 nnoremap \t <ESC>:JavaImportOrganize <CR>
 nnoremap \g <ESC>:JavaGetSet<CR>
-nnoremap \r <ESC>:JavaImpl 
-nnoremap \y <ESC>:NewSrcEntry 
+nnoremap \ji <ESC>:JavaImpl<CR>
+nnoremap \ys <ESC>:NewSrcEntry 
+nnoremap \yj <ESC>:NewJarEntry 
 nnoremap \l <ESC>:Java <CR>
+nnoremap \jc <ESC>:JavaCorrect <CR>
+nnoremap \jr <ESC>:Mvn dependency:resolve <CR>
+nnoremap \jdc <ESC>:JavaDocPreview<CR>
+nnoremap \js <ESC>:JavaSearchContext<CR>
+nnoremap \jco <ESC>:JavaConstructor<CR>
+nnoremap \jch <ESC>:JavaCallHierarchy<CR>
+nnoremap \jh <ESC>:JavaHierarchy<CR>
 
 "---------------------------------------------------------------------------
 "插件设置
@@ -282,7 +292,7 @@ autocmd FileType vim map <buffer> <leader><space> :w!<cr>:source %<cr>
 "autocmd FileType java set completefunc=javacomplete#CompleteParamsInfo
 
 " eclim
-autocmd FileType java inoremap <buffer> . .<C-X><C-O><Down>
+autocmd FileType java inoremap <buffer> . .<C-X><C-O><C-P><Down>
 
 " others
 "autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
