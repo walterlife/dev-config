@@ -8,27 +8,24 @@ Bundle 'vim-scripts/DoxygenToolkit.vim'
 Bundle 'vim-scripts/Tagbar'
 Bundle 'vim-scripts/snipMate'
 Bundle 'vim-scripts/a.vim'
-Bundle 'vim-scripts/AutoComplPop'
 Bundle 'vim-scripts/comments.vim'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'Shougo/neocomplcache'
 Bundle 'scrooloose/nerdtree'
-"Bundle 'cespare/vjde'
-Bundle 'vim-scripts/Conque-Shell'
 
 "---------------------------------------------------------------------------
 " 通用设置
 "---------------------------------------------------------------------------
-
 " 历史记录 在 .viminfo 中记录
 set history=400
 
 " 快捷键激活
-let mapleader =","
+let mapleader = ","
 
 filetype plugin indent on
 syntax enable on
 
+" 设置备份文件路径
 set backup
 if !isdirectory($HOME."/.vim/backupdir")
     silent! execute "!mkdir ~/.vim/backupdir"
@@ -41,19 +38,10 @@ set noswapfile
 set helplang=cn
 set nocompatible
 set winaltkeys=no
-set tags=~/.vim/comm_tags,~/.vim/tags,tags,tags; 
+set tags=~/.vim/comm_tags,~/.vim/cpp_tags,~/.vim/tags,tags,tags; 
 set foldmethod=syntax
 set foldlevel=99
 
-" 重新打开时自动定位到原来的位置
-autocmd BufReadPost *
-	\ if line("'\"") > 0 && line ("'\"") <= line("$") |
-	\   exe "normal! g'\"" |
-	\ endif
-
-autocmd InsertLeave * if &paste == 1|set nopaste |endif
-
-let &termencoding = &encoding
 set encoding=utf-8
 set termencoding=utf-8
 set fileencoding=utf-8
@@ -69,10 +57,6 @@ set sidescrolloff=10
 
 set fileformats=unix,mac,dos
 
-"主题 
-colorscheme peachpuff
-let g:solarized_termtrans=1
-let g:solarized_hitrail   =   0
 set cursorline
 
 set showcmd
@@ -120,9 +104,6 @@ set t_Co=256
 " 设置paste
 set pastetoggle=<F9>
 
-" 在vim中启用backspace
-"set backspace=indent,eol,start
-
 " vim 命令行中tab键补全文件
 set wildmenu
 set wildmode=list:longest,full
@@ -142,28 +123,23 @@ set wildignore+=classes
 set wildignore+=lib
 set wildignore=*.o,*~,*.pyc
 
+" vim backspace
+set backspace=indent,eol,start
+
 "----------------------------------------------------------------------------
 " 快捷键绑定
 "----------------------------------------------------------------------------
-
-" self define
 " vim 帮助
 map  <F1> :help <C-R>=expand('<cword>')<CR><CR>
 
-"标签页打开文件
-nnoremap ,t <Esc>:tabedit 
-
 " sp/vsp 打开文件
-nnoremap ,s <Esc>:sp 
-nnoremap ,d <Esc>:vsp 
+nnoremap <Leader>s <Esc>:sp 
+nnoremap <Leader>d <Esc>:vsp 
 
 " 退出文件和保存文件相关
-nnoremap ,q <Esc>:q!<CR>
-nnoremap ,w <Esc>:w!<CR>
-nnoremap ,m <Esc>:wqa<CR>
-
-" 转换单词大小写 
-nnoremap ,u <Esc>:call SET_UAW()<CR>
+nnoremap <Leader>q <Esc>:q!<CR>
+nnoremap <Leader>w <Esc>:w!<CR>
+nnoremap <Leader>m <Esc>:wqa<CR>
 
 " 多个窗口间移动
 nnoremap <C-H> <Esc><C-W>h
@@ -172,10 +148,10 @@ nnoremap <C-J> <Esc><C-W>j
 nnoremap <C-K> <Esc><C-W>k
 
 " 重新生成 ctags 文件
-nnoremap ,r <Esc>:call RESET_CTAG_CSCOPE()<CR>
+nnoremap <Leader>r <Esc>:call RESET_CTAG_CSCOPE()<CR>
 
-" a.vim 
-nnoremap ,a <Esc>:A<CR>
+" a.vim 仅限于 c/cpp
+nnoremap <Leader>a <Esc>:A<CR>
 
 " Doxygen
 nnoremap \d :Dox<CR>
@@ -190,29 +166,20 @@ nnoremap <C-]> <Esc>g]
 " nerdtree
 map <F7> :NERDTreeToggle<CR>
 
-" 重新加载 .vimrc
-nnoremap \s <ESC>:source ~/.vim/comm.vim<cr>
-" 编辑.vimrc
-nnoremap \e <ESC>:e! ~/.vim/comm.vim<cr>
-
-" eclim
-nnoremap \t <ESC>:JavaImportOrganize <CR>
-nnoremap \g <ESC>:JavaGetSet<CR>
-nnoremap \ji <ESC>:JavaImpl<CR>
-nnoremap \ys <ESC>:NewSrcEntry 
-nnoremap \yj <ESC>:NewJarEntry 
-nnoremap \l <ESC>:Java <CR>
-nnoremap \jc <ESC>:JavaCorrect <CR>
-nnoremap \jr <ESC>:Mvn dependency:resolve <CR>
-nnoremap \jdc <ESC>:JavaDocPreview<CR>
-nnoremap \js <ESC>:JavaSearchContext<CR>
-nnoremap \jco <ESC>:JavaConstructor<CR>
-nnoremap \jch <ESC>:JavaCallHierarchy<CR>
-nnoremap \jh <ESC>:JavaHierarchy<CR>
+" javacomplete2 
+"nnoremap <F8>> call javacomplete#AddImport()<cr>
 
 "---------------------------------------------------------------------------
 "插件设置
 "---------------------------------------------------------------------------
+" 设置编码
+let &termencoding = &encoding
+
+" vim-colors-solarized
+colorscheme peachpuff
+let g:solarized_termtrans=1
+let g:solarized_hitrail=0
+
 " Doxygen
 let g:DoxygenToolkit_briefTag_pre="@brief  " 
 let g:DoxygenToolkit_paramTag_pre="@param  " 
@@ -232,79 +199,81 @@ let g:Powerline_colorscheme = 'solarized256'
 
 " neocomplcache
 let g:neocomplcache_enable_at_startup = 1 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
+let g:syntastic_always_populate_loc_list = 1 
+let g:syntastic_auto_loc_list = 0 
+let g:syntastic_check_on_open = 1 
+let g:syntastic_check_on_wq = 1 
+let g:neocomplcache_enable_quick_match = 1 
+let g:neocomplcache_enable_auto_select = 1 
 
 " markdown
 let g:vim_markdown_folding_disabled = 1
 
-" nerdtree
-" 常用内置快捷说明
-" O 递归打开/关闭所选目录
-" o 打开/关闭当前文件/目录
-" m 显示目录,对此可以新建文件,重命名文件等操作
-" s 以 vsplit 新打开文件
-" p 跳到当前 父节点
-" P 调到根节点
-" K J 用于 同一level =节点间跳转
-
-" 启动vim时就显示书签
-autocmd VimEnter * NERDTree
-
-"let g:vjde_src_path = "/home/java/.vim/java_src/"
-
-let g:EclimCompletionMethod = 'omnifunc'
-if !exists('g:neocomplcache_force_omni_patterns')
-    let g:neocomplcache_force_omni_patterns = {}
-endif
-"let g:neocomplcache_force_omni_patterns.java = '\k\.\k*'
-
 "----------------------------------------------------------------------------
 " 文件类型设置 
 "----------------------------------------------------------------------------
-" 通用
-autocmd BufEnter *  set tabstop=4 
+if has("autocmd")
+    " 通用
+    autocmd BufEnter *  set tabstop=4 
 
-" .cpp
-autocmd BufEnter  *.cpp,*.c,*.h call s:SET_PATH("include") 
-autocmd FileType c set omnifunc=ccomplete#Complete
+    " 重新打开时自动定位到原来的位置
+    autocmd BufReadPost *
+                \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+                \   exe "normal! g'\"" |
+                \ endif
+    autocmd InsertLeave * if &paste == 1|set nopaste |endif
 
-" .c .h 
-autocmd BufEnter *.c  set filetype=cpp
-autocmd BufEnter *.h  set filetype=cpp
-autocmd BufEnter *.hpp  set filetype=cpp
+    " NERDTree
+    "
+    " 常用内置快捷说明
+    " O 递归打开/关闭所选目录
+    " o 打开/关闭当前文件/目录
+    " m 显示目录,对此可以新建文件,重命名文件等操作
+    " s 以 vsplit 新打开文件
+    " p 跳到当前 父节点
+    " P 调到根节点
+    " K J 用于 同一level =节点间跳转
+    "
+    " 启动vim时就显示书签
+    autocmd VimEnter * NERDTree
 
-" python
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd BufRead,BufNewFile *.py set ai
-autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
-autocmd FileType python setlocal et sta sw=4 sts=4
-autocmd FileType python setlocal foldmethod=indent
+    " .cpp
+    autocmd BufEnter  *.cpp,*.c,*.h call s:SET_PATH("include") 
+    autocmd FileType c set omnifunc=ccomplete#Complete
 
-" Vim 
-autocmd FileType vim set nofen
-autocmd FileType vim map <buffer> <leader><space> :w!<cr>:source %<cr>
+    " .c .h 
+    autocmd BufEnter *.c  set filetype=cpp
+    autocmd BufEnter *.h  set filetype=cpp
+    autocmd BufEnter *.hpp  set filetype=cpp
 
-" java
-"autocmd FileType java set omnifunc=javacomplete#Complete
-"autocmd FileType java set completefunc=javacomplete#CompleteParamsInfo
+    " python
+    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    autocmd BufRead,BufNewFile *.py set ai
+    autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+    autocmd FileType python setlocal et sta sw=4 sts=4
+    autocmd FileType python setlocal foldmethod=indent
 
-" eclim
-autocmd FileType java inoremap <buffer> . .<C-X><C-O><C-P><Down>
+    " Vim 
+    autocmd FileType vim set nofen
+    autocmd FileType vim map <buffer> <leader><space> :w!<cr>:source %<cr>
 
-" others
-"autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd BufRead *.as set filetype=actionscript
-autocmd BufRead *.proto set filetype=proto
-autocmd BufRead \d\+-\(\w\+\)-\d\{6\}-\d\{4\}  set filetype=log
-au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
-au BufNewFile,BufRead *.gradle setf groovy
+    " java
+    "autocmd FileType java set omnifunc=javacomplete#Complete
+    "autocmd FileType java inoremap <buffer> . .<C-N><Down>
 
-" 新建.c,.h,.sh,.java文件，自动插入文件头
-autocmd BufNewFile *.html,*.cpp,*.cc,*.[ch],*.hpp,*.sh,*.rb,*.java,*.py call s:SetFileTitle()"
+    " others
+    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+    autocmd BufRead *.as set filetype=actionscript
+    autocmd BufRead *.proto set filetype=proto
+    autocmd BufRead \d\+-\(\w\+\)-\d\{6\}-\d\{4\}  set filetype=log
+    au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
+    au BufNewFile,BufRead *.gradle setf groovy
+
+    " 新建.c,.h,.sh,.java文件，自动插入文件头
+    autocmd BufNewFile *.html,*.cpp,*.cc,*.[ch],*.hpp,*.sh,*.rb,*.java,*.py exec ":call SetTitle()"
+
+endif
 
 "----------------------------------------------------------------------------
 " 函数 
@@ -358,39 +327,17 @@ function! s:SET_PATH( find_dir )
     endwhile
 endfunction
 
-" 重新生成cjag cscope
+" 重新生成ctag 
 function! RESET_CTAG_CSCOPE() 
-    "if(executable('cscope') && has("cscope") )
-        "silent! execute "!find . -name '[^.]*.h' -o -name '[^.]*.c' -o -name '[^.]*.cpp' -o -name '[^.]*.hpp' > cscope.files"
-        "silent! execute "!cscope -bkq"
-        "if (filereadable("cscope.out"))
-            "execute "cs reset"
-        "endif
-    "endif
     if(executable('ctags'))
         silent! execute "!rm -f tags"
-        silent! execute "!ctags -R  --languages=c,c++ --c++-kinds=+p --fields=+iaS --extra=+q ."
+        silent! execute "!ctags -R  --languages=c,java,c++ --c++-kinds=+p --fields=+iaS --extra=+q ."
     endif
     exec "redraw!"
 endfunction
 
-" 转换大小写
-function! SET_UAW()
-    let save_cursor = getpos(".")
-    
-    let line = getline('.')
-    let col_num = col('.')
-    if match("ABCDEFGHIJKLMNOPQRSTUVWXYZ",line[col_num-1])!= -1
-        exec "normal! guaw"
-    else
-        exec "normal! gUaw"
-    endif
-    
-    call setpos('.', save_cursor)
-endfunction
-
 " 定义函数SetTitle，自动插入文件头
-function! SetFileTitle()
+func SetTitle()
     "如果文件类型为.sh文件
     if &filetype == 'sh'
         call setline(1,"#!/usr/bin/env bash")
@@ -432,6 +379,19 @@ function! SetFileTitle()
         call append(line(".")+5, "")
         call append(line(".")+6, "</body>")
         call append(line(".")+7, "</html>")
+    else
+        call setline(1, "/*************************************************************************")
+        call append(line("."),   " *    File Name: ".expand("%"))
+        call append(line(".")+1, " * ")
+        call append(line(".")+2, " *       Author: Shootao Shanghai,Inc.")
+        call append(line(".")+3, " *         Mail: walter@shootao.com")
+        call append(line(".")+4, " * Created Time: ".strftime("%c"))
+        call append(line(".")+5, " * ")
+        call append(line(".")+6, " *  Description: ...")
+        call append(line(".")+7, " * ")
+        call append(line(".")+8, " ************************************************************************")
+        call append(line(".")+9, "*/")
+        call append(line(".")+10, "")
     endif
     if expand("%:e") == 'cpp'
         call append(line(".")+10, "#include <iostream>")
